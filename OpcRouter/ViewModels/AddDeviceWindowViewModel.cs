@@ -32,6 +32,7 @@ public class AddDeviceWindowViewModel:ViewModelBase
                 DeviceInfo = new()
                 {
                     Manufacture = (Manufacture)Enum.Parse(typeof(Manufacture), Manufacture),
+                    // Manufacture = Manufacture,
                     Ip = Ip,
                     Factory = Factory,
                     Workshop = Workshop,

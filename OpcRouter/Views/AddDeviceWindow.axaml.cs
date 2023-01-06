@@ -15,12 +15,14 @@ public partial class AddDeviceWindow : ReactiveWindow<AddDeviceWindowViewModel>
 #if DEBUG
         this.AttachDevTools();
 #endif
+        
+        DataContext = new AddDeviceWindowViewModel();
+        
+        this.WhenActivated(d => d(ViewModel?.SaveCommand.Subscribe(Close)));
     }
 
     private void InitializeComponent()
     {
-        this.WhenActivated(d => d(ViewModel?.SaveCommand.Subscribe(Close)));
         AvaloniaXamlLoader.Load(this);
-        DataContext = new AddDeviceWindowViewModel();
     }
 }

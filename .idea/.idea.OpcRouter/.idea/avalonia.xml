@@ -4,6 +4,7 @@
     <option name="projectPerEditor">
       <map>
         <entry key="OpcRouter/App.axaml" value="OpcRouter/OpcRouter.csproj" />
+        <entry key="OpcRouter/Pages/Home.axaml" value="OpcRouter/OpcRouter.csproj" />
         <entry key="OpcRouter/Views/AddDeviceWindow.axaml" value="OpcRouter/OpcRouter.csproj" />
         <entry key="OpcRouter/Views/MainWindow.axaml" value="OpcRouter/OpcRouter.csproj" />
         <entry key="OpcRouter/Views/UserControls/AddDeviceUC.axaml" value="OpcRouter/OpcRouter.csproj" />

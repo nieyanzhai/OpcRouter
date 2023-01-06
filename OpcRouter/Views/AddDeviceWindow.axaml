@@ -3,7 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:OpcRouter.ViewModels"
-        mc:Ignorable="d" Width="600" Height="400"
+        xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+        mc:Ignorable="d" Width="600" Height="500"
         x:Class="OpcRouter.Views.AddDeviceWindow"
         Title="AddDeviceWindow"
         WindowStartupLocation="CenterOwner">
@@ -17,60 +18,42 @@
                 Command="{Binding SaveCommand}">Save</Button>
 
         <Grid ColumnDefinitions="* *">
-            <Grid.Styles>
-                <Style Selector=":is(TextBlock)">
-                    <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                    <Setter Property="TextAlignment" Value="Right"></Setter>
-                    <Setter Property="Margin" Value="0 0 10 0"></Setter>
-                    <Setter Property="Width" Value="90"></Setter>
-                </Style>
-                <Style Selector=":is(TextBox)">
-                    <Setter Property="Width" Value="200"></Setter>
-                    <Setter Property="Margin" Value="0 2"></Setter>
-                    <Setter Property="TextAlignment" Value="Left"></Setter>
-                </Style>
-            </Grid.Styles>
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Manufacture</TextBlock>
-                    <TextBox Watermark="SC" 
-                             Text="{Binding Manufacture}"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Factory</TextBlock>
-                    <TextBox Watermark="FN"
-                             Text="{Binding Factory}"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Workshop</TextBlock>
-                    <TextBox Watermark="M01"
-                             Text="{Binding Workshop}"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Line</TextBlock>
-                    <TextBox Watermark="L1"
-                             Text="{Binding Line}"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Ip</TextBlock>
-                    <TextBox Watermark="255.255.255.255"
-                             Text="{Binding Ip}"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Name</TextBlock>
-                    <TextBox Watermark="Device name"
-                             Text="{Binding DeviceName}"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Rate</TextBlock>
-                    <TextBox Watermark="5000"
-                             Text="{Binding Rate}"></TextBox>
-                </StackPanel>
+                <TextBox UseFloatingWatermark="True"
+                         Watermark="SC"
+                         assists:TextFieldAssist.Label="Manufacture" 
+                         Text="{Binding Manufacture}"/>
+                <TextBox UseFloatingWatermark="True"
+                         Watermark="FN"
+                         assists:TextFieldAssist.Label="Factory" 
+                         Text="{Binding Factory}"/>
+                <TextBox UseFloatingWatermark="True"
+                         Watermark="M01"
+                         assists:TextFieldAssist.Label="Workshop" 
+                         Text="{Binding Workshop}"/>
+                <TextBox UseFloatingWatermark="True"
+                         Watermark="L1"
+                         assists:TextFieldAssist.Label="Line" 
+                         Text="{Binding Line}"/>
+                <TextBox UseFloatingWatermark="True"
+                         Watermark="255.255.255.255"
+                         assists:TextFieldAssist.Label="Ip" 
+                         Text="{Binding Ip}"/>
+                <TextBox UseFloatingWatermark="True"
+                         Watermark="Device Name"
+                         assists:TextFieldAssist.Label="DeviceName" 
+                         Text="{Binding DeviceName}"/>
+                <TextBox UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="Rate" 
+                         Text="{Binding Rate}"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Margin="20 0">
-                <TextBox AcceptsReturn="True" Height="250" Width="250"
-                         Text="{Binding Tags}"></TextBox>
-                <TextBlock TextAlignment="Center">Tags</TextBlock>
+                <TextBox Classes="outline"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="Tags" 
+                         AcceptsReturn="True" 
+                         Height="400"
+                         Text="{Binding Tags}"/>
             </StackPanel>
         </Grid>
     </DockPanel>

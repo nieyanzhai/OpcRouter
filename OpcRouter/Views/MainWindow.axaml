@@ -3,6 +3,9 @@
         xmlns:vm="using:OpcRouter.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:pages="clr-namespace:OpcRouter.Pages"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="OpcRouter.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -11,40 +14,192 @@
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
+  
 
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="Exit"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Device">
-                    <MenuItem Header="Add" Command="{Binding AddDeviceCommand}" />
-                    <MenuItem Header="Delete" Command="{Binding DeleteDeviceCommand}"/>
-                    <MenuItem Header="Edit" />
-                    <MenuItem Header="Start" Command="{Binding StartCommand}" />
-                    <MenuItem Header="Stop" Command="{Binding StopCommand}" />
+    <controls:SnackbarHost HostName="Root">
+      <controls:NavigationDrawer Name="LeftDrawer" Classes="permanent"
+                                 LeftDrawerOpened="{Binding ElementName=NavDrawerSwitch, Path=IsChecked, Mode=TwoWay}">
+        <controls:NavigationDrawer.LeftDrawerContent>
+          <ScrollViewer>
+            <StackPanel>
+              <controls:ColorZone Mode="Accent" Height="180">
+                <StackPanel>
+                  <Image Width="120" Height="120" HorizontalAlignment="Center" VerticalAlignment="Top"
+                         Source="avares://OpcRouter/Assets/FavIcon_200x.png" Margin="0,0,0,-8"
+                         PointerPressed="MaterialIcon_OnPointerPressed" />
+                  <TextBlock Classes="Headline6" Text="Material Design" HorizontalAlignment="Center" />
+                  <TextBlock Classes="Subtitle1" Text="with AvaloniaUI" HorizontalAlignment="Center" />
+                </StackPanel>
+              </controls:ColorZone>
+              <ListBox Classes="NoScroll" Name="DrawerList"
+                       PointerReleased="DrawerList_OnPointerReleased"
+                       Focusable="{Binding ElementName=LeftDrawer, Path=LeftDrawerOpened}">
+                <ListBox.Styles>
+                  <Style Selector="ListBoxItem">
+                    <Setter Property="Height" Value="48" />
+                    <Setter Property="Padding" Value="16,0" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="IsEnabled" Value="{Binding $self.Content.IsEnabled}" />
+                  </Style>
+                </ListBox.Styles>
+                <TextBlock Classes="Body2" Text="Home" />
+              </ListBox>
+            </StackPanel>
+          </ScrollViewer>
+        </controls:NavigationDrawer.LeftDrawerContent>
+        <DockPanel LastChildFill="true">
+          <controls:ColorZone Name="PART_AppBarContainer" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                              DockPanel.Dock="Top"
+                              Height="56" Mode="PrimaryMid" ZIndex="1">
+            <Grid Margin="16" ColumnDefinitions="24,32,*,32,Auto">
+              <ToggleButton Name="NavDrawerSwitch"
+                            Foreground="{DynamicResource MaterialDesignBody}"
+                            Width="32" Height="32" Padding="4">
+                <avalonia:MaterialIcon Kind="Menu" Width="24" Height="24" />
+              </ToggleButton>
+              <TextBlock Grid.Column="2" Classes="Headline6" Text="Material.Avalonia Demo"
+                         VerticalAlignment="Center" />
+              <Menu Grid.Column="4" Height="32" Padding="0" Margin="0">
+                <MenuItem Height="32" Width="32" Header="{avalonia:MaterialIconExt DotsVertical, Size=24}">
+                  <MenuItem Header="Hello!" >
+                    <MenuItem.Icon>
+                      <avalonia:MaterialIcon Kind="Hand" Width="24" Height="24" />
+                    </MenuItem.Icon>
+                  </MenuItem>
+                  <Separator />
+                  <MenuItem Header="Action 1" />
+                  <MenuItem Header="Action 2" />
+                  <MenuItem Header="Action 3" />
+                  <Separator />
+                  <MenuItem Header="Goodbye" >
+                    <MenuItem.Icon>
+                      <avalonia:MaterialIcon Kind="ExitRun" Width="24" Height="24" />
+                    </MenuItem.Icon>
+                  </MenuItem>
                 </MenuItem>
-            </MenuItem>
-        </Menu>
+              </Menu>
+            </Grid>
+          </controls:ColorZone>
+          <ScrollViewer Name="mainScroller"
+                        DockPanel.Dock="Top"
+                        HorizontalContentAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        HorizontalScrollBarVisibility="Disabled">
+            <Border HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+              <Carousel Name="PageCarousel"
+                        HorizontalAlignment="Stretch">
+                <Carousel.Styles>
+                  <Style Selector="Carousel#PageCarousel:not(.no-transitions)">
+                    <Setter Property="PageTransition">
+                      <PageSlide Duration="0.25" SlideOutEasing="CircularEaseOut"
+                                 SlideInEasing="CircularEaseOut" />
+                    </Setter>
+                  </Style>
+                </Carousel.Styles>
+                <!-- Main page -->
+                <pages:Home />
 
-        <ListBox Items="{Binding Devices}"
-                 SelectedItem="{Binding SelectedDevice}">
-            <ListBox.Styles>
-                <!-- Give the ListBoxItems a fixed with of 100 and right-align them -->
-                <Style Selector="ListBoxItem">
-                    <Setter Property="MinWidth" Value="100" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                </Style>
-            </ListBox.Styles>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="Gray" CornerRadius="4" Padding="4">
-                        <TextBlock Text="{Binding}"></TextBlock>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-    </DockPanel>
+                <!-- Buttons -->
+                <!-- <pages:ButtonsDemo /> -->
+                <!-- -->
+                <!-- ~1~ Toggles @1@ -->
+                <!-- <pages:TogglesDemo /> -->
+                <!-- -->
+                <!-- ~1~ Fields @1@ -->
+                <!-- <pages:FieldsDemo /> -->
+                <!-- -->
+                <!-- ~1~ ComboBoxes @1@ -->
+                <!-- <pages:ComboBoxesDemo /> -->
+                <!-- -->
+                <!-- ~1~ Icons @1@ -->
+                <!-- <pages:IconsDemo /> -->
+                <!-- -->
+                <!-- ~1~ Sliders @1@ -->
+                <!-- <pages:SlidersDemo /> -->
+                <!-- -->
+                <!-- ~1~ Progress indicators @1@ -->
+                <!-- <pages:ProgressIndicatorDemo /> -->
+                <!-- -->
+                <!-- ~1~ Lists @1@ -->
+                <!-- <pages:ListsDemo /> -->
+                <!-- -->
+                <!-- ~1~ Expanders @1@ -->
+                <!-- <pages:ExpandersDemo /> -->
+                <!-- -->
+                <!-- ~1~ ColorZones @1@ -->
+                <!-- <pages:ColorZonesDemo /> -->
+                <!-- -->
+                <!-- ~1~ Dialogs @1@ -->
+                <!-- <pages:DialogDemo /> -->
+                <!-- -->
+                <!-- ~1~ ScrollViewer @1@ -->
+                <!-- <pages:ScrollViewerDemo /> -->
+                <!-- -->
+                <!-- ~1~ SideSheet @1@ -->
+                <!-- <pages:SideSheetDemo /> -->
+                <!-- -->
+                <!-- ~1~ TabControls @1@ -->
+                <!-- <pages:TabsDemo /> -->
+                <!-- -->
+                <!-- ~1~ TreeViews @1@ -->
+                <!-- <pages:TreeViewsDemo /> -->
+                <!-- -->
+                <!-- ~1~ Card @1@ -->
+                <!-- <pages:CardsDemo /> -->
+                <!-- -->
+                <!-- ~1~ Typography @1@ -->
+                <!-- <pages:TypographyDemo /> -->
+                <!-- -->
+                <!-- ~1~ Pickers @1@ -->
+                <!-- <pages:PickersDemo /> -->
+                <!-- -->
+                <!-- ~1~ Shadows @1@ -->
+                <!-- <pages:NotReadyDemo /> -->
+              </Carousel>
+            </Border>
+          </ScrollViewer>
+        </DockPanel>
+      </controls:NavigationDrawer>
+    </controls:SnackbarHost>
+    
+    
+    
+    
+    
+    <!-- -->
+    <!-- <DockPanel> -->
+    <!--     <Menu DockPanel.Dock="Top"> -->
+    <!--         <MenuItem Header="File"> -->
+    <!--             <MenuItem Header="Exit"></MenuItem> -->
+    <!--         </MenuItem> -->
+    <!--         <MenuItem Header="Edit"> -->
+    <!--             <MenuItem Header="Device"> -->
+    <!--                 <MenuItem Header="Add" Command="{Binding AddDeviceCommand}" /> -->
+    <!--                 <MenuItem Header="Delete" Command="{Binding DeleteDeviceCommand}"/> -->
+    <!--                 <MenuItem Header="Edit" /> -->
+    <!--                 <MenuItem Header="Start" Command="{Binding StartCommand}" /> -->
+    <!--                 <MenuItem Header="Stop" Command="{Binding StopCommand}" /> -->
+    <!--             </MenuItem> -->
+    <!--         </MenuItem> -->
+    <!--     </Menu> -->
+    <!-- -->
+    <!--     <ListBox Items="{Binding Devices}" -->
+    <!--              SelectedItem="{Binding SelectedDevice}"> -->
+    <!--         <ListBox.Styles> -->
+    <!--             ~1~ Give the ListBoxItems a fixed with of 100 and right-align them @1@ -->
+    <!--             <Style Selector="ListBoxItem"> -->
+    <!--                 <Setter Property="MinWidth" Value="100" /> -->
+    <!--                 <Setter Property="HorizontalAlignment" Value="Left" /> -->
+    <!--             </Style> -->
+    <!--         </ListBox.Styles> -->
+    <!--         <ListBox.ItemTemplate> -->
+    <!--             <DataTemplate> -->
+    <!--                 <Border Background="Gray" CornerRadius="4" Padding="4"> -->
+    <!--                     <TextBlock Text="{Binding}"></TextBlock> -->
+    <!--                 </Border> -->
+    <!--             </DataTemplate> -->
+    <!--         </ListBox.ItemTemplate> -->
+    <!--     </ListBox> -->
+    <!-- </DockPanel> -->
 </Window>

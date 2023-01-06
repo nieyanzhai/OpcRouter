@@ -1,11 +1,11 @@
-using System.Reactive;
-using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.ReactiveUI;
-using MessageBox.Avalonia;
-using MessageBox.Avalonia.Enums;
-using OpcRouter.Models.Entities.DeviceEntity;
+using Material.Styles.Themes;
+using Material.Styles.Themes.Base;
 using OpcRouter.ViewModels;
-using ReactiveUI;
 
 namespace OpcRouter.Views
 {
@@ -13,35 +13,37 @@ namespace OpcRouter.Views
     {
         public MainWindow()
         {
-
-            this.WhenActivated(d =>
-            {
-                if (ViewModel == null) return;
-                d(ViewModel.AddDeviceInteraction.RegisterHandler(ShowAddDeviceDialog));
-                d(ViewModel.DeleteDeviceInteraction.RegisterHandler(ShowDeleteDeviceDialog));
-            });
-            
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
-        }
-
-        private async Task ShowDeleteDeviceDialog(InteractionContext<string, bool> interaction)
-        {
-            var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
-                title: "Confirm Delete",
-                text: $"Are you sure you want to delete {interaction.Input}",
-                ButtonEnum.YesNo,
-                MessageBox.Avalonia.Enums.Icon.Warning
-            );
-            var result = await messageBoxStandardWindow.ShowDialog(this);
-            interaction.SetOutput(result == ButtonResult.Yes);
         }
         
-        private async Task ShowAddDeviceDialog(InteractionContext<Unit, Device> obj)
+        private void MaterialIcon_OnPointerPressed(object? sender, PointerPressedEventArgs e)
         {
-            var addDeviceWindow = new AddDeviceWindow();
-            var result = await addDeviceWindow.ShowDialog<Device?>(this);
-            obj.SetOutput(result);
+            var materialTheme = Application.Current.LocateMaterialTheme<MaterialTheme>();
+            materialTheme.BaseTheme = materialTheme.BaseTheme == BaseThemeMode.Light
+                ? BaseThemeMode.Dark
+                : BaseThemeMode.Light;
+        }
+
+        private void DrawerList_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
+        {
+            if (sender is not ListBox listBox)
+                return;
+
+            if (listBox is {IsFocused: false, IsKeyboardFocusWithin: false})
+                return;
+            try
+            {
+                PageCarousel.SelectedIndex = listBox.SelectedIndex;
+                mainScroller.Offset = Vector.Zero;
+                mainScroller.VerticalScrollBarVisibility =
+                    listBox.SelectedIndex == 5 ? ScrollBarVisibility.Disabled : ScrollBarVisibility.Auto;
+            }
+            catch
+            {
+                // ignored
+            }
+
+            LeftDrawer.OptionalCloseLeftDrawer();
         }
     }
 }

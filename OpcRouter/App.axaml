@@ -1,6 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:OpcRouter"
+             xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"
              x:Class="OpcRouter.App">
     <Application.DataTemplates>
         <local:ViewLocator/>
@@ -8,17 +9,10 @@
 
     <Application.Styles>
         <FluentTheme Mode="Light"></FluentTheme>
+        <themes:MaterialTheme BaseTheme="Light" PrimaryColor="Purple" SecondaryColor="Indigo" />
+        <StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml"></StyleInclude>
+        <!-- <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/> -->
+        <StyleInclude Source="avares://Material.DataGrid/DataGrid.xaml" />
         
-        <!-- The line below is the only thing you need to get started.
-         Tested with Avalonia 0.9.0 only, although not with all controls. -->
-        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/> -->
-
-        <!-- To use other themes:
-         1. Comment out *all* of the <StyleInclude /> lines.
-         2. Uncomment *one* of the <StyleInclude /> lines below. -->
-        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Sea.xaml"/> -->
-        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Rust.xaml"/> -->
-        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Candy.xaml"/> -->
-        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Magma.xaml"/> -->
     </Application.Styles>
 </Application>

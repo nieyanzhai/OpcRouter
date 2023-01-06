@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:vm="using:OpcRouter.PageViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="OpcRouter.Pages.Home">
+    <Design.DataContext>
+        <vm:HomeViewModel />
+    </Design.DataContext>
+
+    <DockPanel Margin="4" LastChildFill="True">
+        <controls:ColorZone VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                            DockPanel.Dock="Top"
+                            Background="{DynamicResource MaterialDesignPaper}"
+                            Height="56" Mode="PrimaryMid" ZIndex="1">
+            <Grid ColumnDefinitions="*,*">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <controls:FloatingButton Classes="Accent Mini"
+                                             Command="{Binding AddDeviceCommand}">
+                        <avalonia:MaterialIcon Kind="Add" Width="24" Height="24" />
+                    </controls:FloatingButton>
+                    <controls:FloatingButton Classes="Accent Mini"
+                                             Command="{Binding DeleteDeviceCommand}">
+                        <avalonia:MaterialIcon Kind="Delete" Width="24" Height="24" />
+                    </controls:FloatingButton>
+                    <controls:FloatingButton Classes="Accent Mini">
+                        <avalonia:MaterialIcon Kind="Edit" Width="24" Height="24" />
+                    </controls:FloatingButton>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
+                    <controls:FloatingButton Classes="Mini"
+                                             Command="{Binding StartCommand}">
+                        <avalonia:MaterialIcon Kind="PlayOutline" Width="24" Height="24" />
+                    </controls:FloatingButton>
+                    <controls:FloatingButton Classes="Mini" HorizontalContentAlignment="Right"
+                                             Command="{Binding StopCommand}">
+                        <avalonia:MaterialIcon Kind="Stop" Width="24" Height="24" />
+                    </controls:FloatingButton>
+                </StackPanel>
+            </Grid>
+        </controls:ColorZone>
+        <DataGrid  Items="{Binding DeviceInfos}" 
+                   AutoGenerateColumns="False" 
+                   IsReadOnly="True" 
+                   SelectionMode="Single" 
+                   SelectedItem="{Binding SelectedDevice}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Manufacture" Binding="{Binding Manufacture}" />
+                <DataGridTextColumn Header="Factory" Binding="{Binding Factory}" />
+                <DataGridTextColumn Header="Workshop" Binding="{Binding Workshop}" />
+                <DataGridTextColumn Header="Line" Binding="{Binding Line}" />
+                <DataGridTextColumn Header="DeviceName" Binding="{Binding DeviceName}" />
+                <DataGridTextColumn Header="Ip" Binding="{Binding Ip}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

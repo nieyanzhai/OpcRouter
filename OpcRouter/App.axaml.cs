@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ClassLibrary.CommonServices;
@@ -25,6 +26,7 @@ public class App : Application
     public static IHost Host;
     private Mutex _mutex;
     private readonly CancellationTokenSource _cancellationTokenSource = new();
+    public static Window MainWindow;
 
     public override void Initialize()
     {
@@ -42,8 +44,8 @@ public class App : Application
         Log.Error("Another instance of the program is already running");
         Environment.Exit(0);
     }
-     
-    
+
+
     private IHost ConfigureServices()
     {
         return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
@@ -57,7 +59,7 @@ public class App : Application
                 // services.AddSingleton<MainWindowViewModel>();
                 // services.AddSingleton<MainWindow>();
 
-                _protocol = (Protocol)Enum.Parse(typeof(Protocol),
+                _protocol = (Protocol) Enum.Parse(typeof(Protocol),
                     context.Configuration["DefaultSettings:Protocol"]);
                 switch (_protocol)
                 {
@@ -77,7 +79,7 @@ public class App : Application
             .UseSerilog()
             .Build();
     }
-    
+
     private static void ConfigureLogger()
     {
         // Create the log path
@@ -101,7 +103,7 @@ public class App : Application
                 retainedFileCountLimit: 90)
             .CreateLogger();
     }
-    
+
     public override void OnFrameworkInitializationCompleted()
     {
         try
@@ -109,10 +111,15 @@ public class App : Application
             // Show the main window
             Log.Information("Showing main window");
             // var mainWindow = Host.Services.GetRequiredService<MainWindow>();
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) desktop.MainWindow = new MainWindow()
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                DataContext = new MainWindowViewModel()
-            };
+                desktop.MainWindow = new MainWindow()
+                {
+                    DataContext = new MainWindowViewModel()
+                };
+                MainWindow = desktop.MainWindow;
+            }
+
             // mainWindow.Show();
             Log.Information("Main window shown");
 
@@ -133,9 +140,8 @@ public class App : Application
             _cancellationTokenSource.Cancel();
             StopHost(_cancellationTokenSource.Token);
         }
-
     }
-    
+
     private void StopHost(CancellationToken cancellationToken)
     {
         Host.StopAsync(cancellationToken).GetAwaiter().GetResult();
@@ -157,7 +163,7 @@ public class App : Application
 
         Host.Dispose();
     }
-    
+
     private void StartHost(CancellationToken cancellationToken)
     {
         Host.Start();
@@ -178,5 +184,4 @@ public class App : Application
                 throw new ArgumentOutOfRangeException();
         }
     }
-    
 }
