@@ -9,9 +9,42 @@
         Title="OpcRouter">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Device">
+                    <MenuItem Header="Add" Command="{Binding AddDeviceCommand}" />
+                    <MenuItem Header="Delete" Command="{Binding DeleteDeviceCommand}"/>
+                    <MenuItem Header="Edit" />
+                    <MenuItem Header="Start" Command="{Binding StartCommand}" />
+                    <MenuItem Header="Stop" Command="{Binding StopCommand}" />
+                </MenuItem>
+            </MenuItem>
+        </Menu>
 
+        <ListBox Items="{Binding Devices}"
+                 SelectedItem="{Binding SelectedDevice}">
+            <ListBox.Styles>
+                <!-- Give the ListBoxItems a fixed with of 100 and right-align them -->
+                <Style Selector="ListBoxItem">
+                    <Setter Property="MinWidth" Value="100" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                </Style>
+            </ListBox.Styles>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="Gray" CornerRadius="4" Padding="4">
+                        <TextBlock Text="{Binding}"></TextBlock>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </DockPanel>
 </Window>

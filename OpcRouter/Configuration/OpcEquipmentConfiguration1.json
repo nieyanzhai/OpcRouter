@@ -1,33 +1,68 @@
-{
-  "CreatedDate": "0001-01-01T00:00:00+00:00",
-  "DeviceInfo": {
-    "Manufacture": "JC",
-    "DeviceName": "M03L4CY-01.lower",
-    "Ip": "127.0.0.1",
-    "Factory": "FN",
-    "Workshop": "03",
-    "Line": "L1"
-  },
-  "Tags": [
-    {
-      "Name": "Tag1",
-      "Description": "Tag1",
-      "Id": "ns=2;s=Channel1.Device1.Tag1",
-      "Value": ""
+[
+  {
+    "CreatedDate": "0001-01-01T00:00:00+00:00",
+    "DeviceInfo": {
+      "Manufacture": "JC",
+      "DeviceName": "M03L4CY-01.lower",
+      "Ip": "127.0.0.1",
+      "Factory": "FN",
+      "Workshop": "03",
+      "Line": "L1"
     },
-    {
-      "Name": "Tag2",
-      "Description": "Tag2",
-      "Id": "ns=2;s=Channel1.Device1.Tag2",
-      "Value": ""
-    }
-  ],
-  "Signals": [
-    {
-      "Name": "B0",
-      "Description": "拍照信号",
-      "Id": "ns=2;s=Channel1.Device1.B0",
-      "Value": null
-    }
-  ]
-}
+    "Tags": [
+      {
+        "Name": "Tag1",
+        "Description": "Tag1",
+        "Id": "ns=2;s=Channel1.Device1.Tag1",
+        "Value": ""
+      },
+      {
+        "Name": "Tag2",
+        "Description": "Tag2",
+        "Id": "ns=2;s=Channel1.Device1.Tag2",
+        "Value": ""
+      }
+    ],
+    "Signals": [
+      {
+        "Name": "B0",
+        "Description": "拍照信号",
+        "Id": "ns=2;s=Channel1.Device1.B0",
+        "Value": null
+      }
+    ]
+  },
+  {
+    "CreatedDate": "0001-01-01T00:00:00+00:00",
+    "DeviceInfo": {
+      "Manufacture": "JC",
+      "DeviceName": "M03L4CY-02.lower",
+      "Ip": "127.0.0.1",
+      "Factory": "FN",
+      "Workshop": "03",
+      "Line": "L1"
+    },
+    "Tags": [
+      {
+        "Name": "Tag1",
+        "Description": "Tag1",
+        "Id": "ns=2;s=Channel1.Device2.Tag1",
+        "Value": ""
+      },
+      {
+        "Name": "Tag2",
+        "Description": "Tag2",
+        "Id": "ns=2;s=Channel1.Device2.Tag2",
+        "Value": ""
+      }
+    ],
+    "Signals": [
+      {
+        "Name": "B0",
+        "Description": "拍照信号",
+        "Id": "ns=2;s=Channel1.Device2.B0",
+        "Value": null
+      }
+    ]
+  }
+]

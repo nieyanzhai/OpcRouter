@@ -1,0 +1,28 @@
+{
+  "CreatedDate": "0001-01-01T00:00:00+00:00",
+  "DeviceInfo": {
+    "Manufacture": "HongTaiYang",
+    "DeviceName": "M03L4CY-01.lower",
+    "Ip": "192.168.0.172",
+    "Factory": "FN",
+    "Workshop": "03",
+    "Line": "L1"
+  },
+  "Tags": [
+    {
+      "Name": "Clock",
+      "Description": "设备内部时钟，格式为：YYYYMMDDhhmmss",
+      "DataType": "A",
+      "Id": "17",
+      "Value": null
+    },
+    {
+      "Name": "Tube1.BoatNum ",
+      "Description": "舟号",
+      "DataType": "A",
+      "Id": "102",
+      "Value": null
+    }
+  ],
+  "Signals": null
+}
